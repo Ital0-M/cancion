@@ -16,10 +16,13 @@
             <form:errors path="titulo" cssClass="error"/>
         </div>
         <div>
-            <form:label path="artista">Artista:</form:label>
-            <form:input path="artista"/>
-            <form:errors path="artista" cssClass="error"/>
+            <label for="artista">Artista:</label>
+            <form:select path="artista.id">
+                <form:options items="${artistas}" itemValue="id" itemLabel="nombre" />
+            </form:select>
+            <form:errors path="artista" cssClass="error" />
         </div>
+
         <div>
             <form:label path="album">album:</form:label>
             <form:input path="album"/>

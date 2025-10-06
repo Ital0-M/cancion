@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.italomartinez.cancion.modelos.Artista;
 import com.italomartinez.cancion.modelos.Cancion;
+import com.italomartinez.cancion.servicios.ServicioArtistas;
 import com.italomartinez.cancion.servicios.ServicioCanciones;
 
 import jakarta.validation.Valid;
@@ -21,6 +23,9 @@ public class ControladorCanciones {
 
     @Autowired
     private ServicioCanciones servicio;
+
+    @Autowired
+    private ServicioArtistas servicioArtistas;
 
     @GetMapping
     public String desplegarCanciones(Model model) {
@@ -38,18 +43,36 @@ public class ControladorCanciones {
     @GetMapping("/formulario/agregar")
     public String formularioAgregarCancion(Model model) {
         model.addAttribute("cancion", new Cancion());
+        model.addAttribute("artistas", servicioArtistas.obtenerTodosLosArtistas());
         return "agregarCancion";
     }
 
-    @PostMapping("/procesa/agregar")
-    public String procesarAgregarCancion(@Valid @ModelAttribute("cancion") Cancion cancion,
-                                        BindingResult result, Model model) {
+@PostMapping("/canciones/procesa/agregar")
+public String procesarAgregarCancion(@Valid @ModelAttribute("cancion") Cancion cancion,
+                                    BindingResult result, Model model) {
     if (result.hasErrors()) {
+        model.addAttribute("artistas", servicioArtistas.obtenerTodosLosArtistas());
         return "agregarCancion";
     }
-    servicio.agregarCancion(cancion);
-    return "redirect:/canciones";
+
+    if (cancion.getArtista() == null || cancion.getArtista().getId() == null) {
+        result.rejectValue("artista", "error.cancion", "Debe seleccionar un artista válido");
+        model.addAttribute("artistas", servicioArtistas.obtenerTodosLosArtistas());
+        return "agregarCancion";
     }
+
+    Artista artista = servicioArtistas.obtenerArtistaPorId(cancion.getArtista().getId());
+    if (artista == null) {
+        result.rejectValue("artista", "error.cancion", "El artista seleccionado no existe");
+        model.addAttribute("artistas", servicioArtistas.obtenerTodosLosArtistas());
+        return "agregarCancion";
+    }
+
+    cancion.setArtista(artista);
+    servicio.agregarCancion(cancion);
+
+    return "redirect:/canciones";
+}
 
     @GetMapping("/formulario/editar/{id}")
     public String formularioEditarCancion(@PathVariable("id") Long id, Model model) {
