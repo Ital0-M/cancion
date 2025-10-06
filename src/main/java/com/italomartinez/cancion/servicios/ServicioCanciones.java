@@ -1,11 +1,13 @@
 package com.italomartinez.cancion.servicios;
 
-import com.italomartinez.cancion.repositorios.RepositorioCanciones;
-import com.italomartinez.cancion.modelos.Cancion;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.italomartinez.cancion.modelos.Cancion;
+import com.italomartinez.cancion.repositorios.RepositorioCanciones;
 
 @Service
 public class ServicioCanciones {
@@ -21,4 +23,8 @@ public class ServicioCanciones {
         Optional<Cancion> cancion = repositorio.findById(id);
         return cancion.orElse(null);
     }
+
+    public Cancion agregarCancion(Cancion cancion) {
+    return repositorio.save(cancion);
+}
 }
