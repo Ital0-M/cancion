@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,11 +28,10 @@ public class Cancion {
     @Size(min = 5, message = "El titulo debe tener al menos 5 caracteres")
     private String titulo;
 
-    @NotBlank(message = "El artista es obligatorio")
-    @Size(min = 3, message = "El artista debe tener al menos 3 caracteres")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artista_id")
     private Artista artista;
+
 
 
     @NotBlank(message = "El album es obligatorio")

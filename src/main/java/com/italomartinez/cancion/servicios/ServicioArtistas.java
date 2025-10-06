@@ -12,17 +12,17 @@ import com.italomartinez.cancion.repositorios.RepositorioArtistas;
 public class ServicioArtistas {
 
     @Autowired
-    private RepositorioArtistas repositorio;
+    private RepositorioArtistas repositorioArtistas;
 
     public List<Artista> obtenerTodosLosArtistas() {
-        return repositorio.findAll();
+        return repositorioArtistas.findAll();
     }
 
     public Artista obtenerArtistaPorId(Long id) {
-        return repositorio.findById(id).orElse(null);
+        return repositorioArtistas.findById(id).orElse(null);
     }
 
     public Artista agregarArtista(Artista artista) {
-        return repositorio.save(artista);
+        return repositorioArtistas.save(artista);
     }
 }
