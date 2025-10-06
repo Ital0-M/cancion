@@ -38,9 +38,13 @@ public class ServicioCanciones {
         c.setGenero(cancion.getGenero());
         c.setIdioma(cancion.getIdioma());
         return repositorio.save(c);
-    } else {
+    } 
+    else {
         return null;
+        }
     }
+    public void eliminaCancion(Long id) {
+    repositorio.deleteById(id);
 }
 
 }

@@ -1,11 +1,14 @@
 package com.italomartinez.cancion.repositorios;
 
-import com.italomartinez.cancion.modelos.Cancion;
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import java.util.List;
+
+import com.italomartinez.cancion.modelos.Cancion;
 
 @Repository
 public interface RepositorioCanciones extends CrudRepository<Cancion, Long> {
     List<Cancion> findAll();
 }
+

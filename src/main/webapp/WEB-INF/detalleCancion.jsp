@@ -16,7 +16,19 @@
     <p>Fecha de creacion: ${cancion.fechaCreacion}</p>
     <p>Fecha de actualizacion: ${cancion.fechaActualizacion}</p>
     <a href="/canciones">Volver a lista de canciones</a>
-    <a href="/canciones/formulario/editar/${cancion.id}"><button>Editar Cancion</button></a>
-
+    <div>
+    <a href="/canciones/formulario/editar/${cancion.id}">
+        <button>
+            Editar Cancion
+        </button>
+    </a>
+    </div>
+    <div>
+    <a href="/canciones/eliminar/${cancion.id}">
+        <button type="button">
+            Eliminar Cancion
+        </button>
+    </a>
+    </div>
 </body>
 </html>
